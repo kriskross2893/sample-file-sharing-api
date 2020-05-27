@@ -1,3 +1,4 @@
+
 import dotenv from 'dotenv';
 import joi from 'joi';
 import debugLib from 'debug';
@@ -24,6 +25,8 @@ if (process.env.NODE_ENV !== 'test') {
       .default(5000),
     DEBUG: joi.string()
       .default('*'),
+    FOLDER: joi.string()
+      .required(),
   }).unknown()
     .required();
 
