@@ -1,0 +1,8 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": "error",
+    "comma-dangle": ["warn", "always-multiline"],
+    "operator-linebreak": ["error", "before"]
+  }
+}
