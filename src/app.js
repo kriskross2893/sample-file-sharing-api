@@ -1,6 +1,5 @@
 import express from 'express';
 import debugLib from 'debug';
-import multer from 'multer';
 
 import './config/config';
 import files from './routes/files';
@@ -10,7 +9,6 @@ const port = process.env.PORT;
 const host = process.env.HOST;
 
 const debug = debugLib('file-sharing-api:server');
-const upload = multer();
 
 const app = express();
 
@@ -19,7 +17,6 @@ app.get('/', function(req, res) {
 });
 
 // all routes after this will be able to parse multipart/form-data
-app.use(upload.array());
 app.use('/files', files);
 
 let listener;
