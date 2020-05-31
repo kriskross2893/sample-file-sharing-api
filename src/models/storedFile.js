@@ -2,18 +2,24 @@
 import Sequelize from 'sequelize';
 import uuid from 'uuid';
 import nacl from 'tweetnacl';
+import util from 'tweetnacl-util';
+
+nacl.util = util;
 
 module.exports = (sequelize, DataTypes) => {
   class StoredFile extends Sequelize.Model {
     static generateKeyPair() {
       const {
         publicKey,
-        secretKey: privateKey,
+        secretKey,
       } = nacl.box.keyPair();
 
+      const encodedPublicKey = nacl.util.encodeBase64(publicKey);
+      const encodedSecretKey = nacl.util.encodeBase64(secretKey);
+
       return {
-        publicKey,
-        privateKey,
+        publicKey: encodedPublicKey,
+        privateKey: encodedSecretKey,
       };
     }
   };
@@ -42,6 +48,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     fileUrl: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    /**
+     * Size of the file stored in MB
+     */
+    fileSizeMB: {
+      type: DataTypes.DOUBLE,
       allowNull: false,
     },
     /**
